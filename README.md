@@ -1,8 +1,30 @@
-# React + Vite
+export const evaluate = (expression) => {
+  const parts = expression.trim().split(' ');
+  if (parts.length !== 3) {
+    throw new Error('Invalid expression');
+  }
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  const [num1, operator, num2] = parts;
+  const a = parseFloat(num1);
+  const b = parseFloat(num2);
 
-Currently, two official plugins are available:
+  if (isNaN(a) || isNaN(b)) {
+    throw new Error('Invalid numbers');
+  }
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  switch (operator) {
+    case '+':
+      return a + b;
+    case '-':
+      return a - b;
+    case '*':
+      return a * b;
+    case '/':
+      if (b === 0) {
+        throw new Error('Division by zero');
+      }
+      return a / b;
+    default:
+      throw new Error('Invalid operator');
+  }
+};
